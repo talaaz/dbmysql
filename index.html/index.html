@@ -1,0 +1,84 @@
+use db4; 
+drop table if exists `book_genre`;
+drop table if exists `book_author`;
+drop table if exists `book_borrower`;
+drop table if exists `book`;
+drop table if exists `genre`;
+drop table if exists `author`;
+drop table if exists `borrower`;
+
+create TABLE `book`(
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `title` varchar(255) NOT NULL,
+  `borrowing_log` int(8) unsigned NOT NULL,
+  `review` varchar(255) NOT NULL 
+);
+
+create table `genre` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(255) NOT NULL
+);
+create table `author`(
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(255) NOT NULL
+);
+create table `borrower`(
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(255) NOT NULL,
+  `email` varchar (255) NOT NULL
+
+);
+
+CREATE TABLE `book_genre` (
+  `book_id` int(10) unsigned NOT NULL,
+  `genre_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY(`book_id`, `genre_id`),
+  CONSTRAINT `fk_book_genre_book` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_book_genre_genre` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+); 
+CREATE TABLE `book_author` (
+  `book_id` int(10) unsigned NOT NULL,
+  `author_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY(`book_id`, `author_id`),
+  CONSTRAINT `fk_book_author_book` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_book_author_author` FOREIGN KEY (`author_id`) REFERENCES `author` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+); 
+CREATE TABLE `book_borrower` (
+  `book_id` int(10) unsigned NOT NULL,
+  `borrower_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY(`book_id`, `borrower_id`),
+  CONSTRAINT `fk_book_borrower_book` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_book_borrower_borrower` FOREIGN KEY (`borrower_id`) REFERENCES `borrower` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+); 
+--book
+insert into book (id, title, borrowing_log, review) values (1, 'ASk', '12345678', 'flkvlekef');
+--genreinsert into book (id, title, borrowing_log, review) values (2, 'ASk', '12345678', 'flkvlekef');
+insert into book (id, title, borrowing_log, review) values (3, 'ASk', '12345678', 'flkvlekef');
+insert into book (id, title, borrowing_log, review) values (4, 'ASk', '12345678', 'flkvlekef');
+insert into book (id, title, borrowing_log, review) values (5, 'ASk', '12345678', 'flkvlekef');
+
+insert into genre (id, name) values (1, 'drama');
+insert into genre (id, name) values (2, 'action');
+insert into genre (id, name) values (3, 'comedy');
+insert into genre (id, name) values (4, 'horror');
+insert into genre (id, name) values (5, 'romance');
+--author
+insert into author (id, name) values (1, 'J K Rowling');
+insert into author (id, name) values (2, 'Roger Hargreaves');
+insert into author (id, name) values (3, 'Jacqueline Wilson');
+insert into author (id, name) values (4, 'John Grisham');
+insert into author (id, name) values (5, 'James Patterson');
+-borrower
+insert into borrower (id, name,email) values (1, 'Tala','talaaz@gmail.com');
+insert into borrower (id, name, email) values (2, 'Haya','azhaya@gmail.com');
+insert into borrower (id, name, email) values (3, 'Sara','saraam@gmail.com');
+
+--book_genre
+insert into book_genre (book_id, genre_id) values(1, 5);
+insert into book_genre (book_id, genre_id) values(1, 3);
+--book_author
+insert into book_author (book_id, author_id) values(1, 5);
+insert into book_author (book_id, author_id) values(2, 3);
+--book_borrower
+insert into book_borrower (book_id, borrower_id) values(1, 2);
+insert into book_borrower (book_id, borrower_id) values(4, 3);
